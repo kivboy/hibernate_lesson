@@ -1,0 +1,5 @@
+CREATE DATABASE sportclub ENCODING 'UTF-8';
+
+CREATE SCHEMA sport_sch
+    AUTHORIZATION postgres;
+
