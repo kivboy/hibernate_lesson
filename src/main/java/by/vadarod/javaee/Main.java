@@ -33,7 +33,7 @@ public class Main {
         }
 
         clientService.deleteClient(clients.get(0));
-        clientService.changeClientStatus(4L, Client.ClientStatus.PREMIUM);
+        clientService.changeClientStatus(4L, Client.ClientStatus.BLOCKED);
 
         System.out.println("Список всех клиентов из базы");
         for (Client client:clientService.getAllClients()) {

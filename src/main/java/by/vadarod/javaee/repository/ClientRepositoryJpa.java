@@ -46,8 +46,7 @@ public class ClientRepositoryJpa implements ClientRepository {
     public void changeClient(Client client) {
         EntityManager entityManager = HibernateConnection.getEntityManager();
         entityManager.getTransaction().begin();
-        Client changeClient = entityManager.find(Client.class, client.getId());
-        entityManager.persist(changeClient);
+        entityManager.merge(client);
         entityManager.getTransaction().commit();
         entityManager.close();
     }
