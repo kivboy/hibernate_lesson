@@ -69,6 +69,7 @@ public class RoomRepositoryImpl implements RoomRepository{
         Room room = session.get(Room.class, oldRoomId);
         if (room != null) {
             session.detach(room);
+            room.setId(null);
             room.setIdNumber(roomIdNumber);
             room.setName(roomName);
             session.getTransaction().begin();
