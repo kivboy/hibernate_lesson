@@ -1,9 +1,6 @@
 package by.vadarod.javaee.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,13 +15,16 @@ import java.time.LocalDate;
 public class Client {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clientSeq")
+    @SequenceGenerator(name = "clientSeq", schema = "sport_sch", sequenceName = "client_seq", allocationSize = 1)
     private Long id;
 
-    @Column (name = "last_name")
+    @Column (name = "last_name", length=100)
     private String lastName;
-    @Column (name = "first_name")
+    @Column (name = "first_name", length=100)
     private String firstName;
     private int age;
+    @Column (length=20)
     private String phone;
     @Column (name = "last_visit")
     private LocalDate lastVisit;
