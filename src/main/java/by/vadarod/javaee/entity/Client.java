@@ -32,6 +32,10 @@ public class Client {
     private ClientStatus clientStatus;
     private Long amount;
 
+    @Embedded
+    private Address address;
+
+
     public enum ClientStatus {
         ACTIVE("Активный"),
         BLOCKED("Заблокирован"),

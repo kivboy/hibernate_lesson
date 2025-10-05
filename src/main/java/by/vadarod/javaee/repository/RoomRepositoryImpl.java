@@ -2,6 +2,7 @@ package by.vadarod.javaee.repository;
 
 import by.vadarod.javaee.config.HibernateSessionFactoryUtil;
 import by.vadarod.javaee.entity.Room;
+import by.vadarod.javaee.entity.RoomUnder15;
 import jakarta.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -79,6 +80,17 @@ public class RoomRepositoryImpl implements RoomRepository{
 
         session.close();
         return room;
+    }
+
+    @Override
+    public List<RoomUnder15> findRoomsUnder15() {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("select r from RoomUnder15 r", RoomUnder15.class);
+        @SuppressWarnings("unchecked")
+        List<RoomUnder15> roomList = (List<RoomUnder15>)query.getResultList();
+        session.close();
+
+        return roomList;
     }
 
 }

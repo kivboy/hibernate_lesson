@@ -1,6 +1,7 @@
 package by.vadarod.javaee.service;
 
 import by.vadarod.javaee.entity.Room;
+import by.vadarod.javaee.entity.RoomUnder15;
 import by.vadarod.javaee.repository.RoomRepository;
 import lombok.NonNull;
 
@@ -33,5 +34,9 @@ public class RoomService {
 
     public List<Room> getAllRooms() {
         return roomRepository.getlAll();
+    }
+
+    public List<RoomUnder15> findRoomsUnder15() {
+        return roomRepository.findRoomsUnder15();
     }
 }

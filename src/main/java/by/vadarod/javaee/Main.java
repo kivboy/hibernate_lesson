@@ -1,8 +1,6 @@
 package by.vadarod.javaee;
 
-import by.vadarod.javaee.entity.Activity;
-import by.vadarod.javaee.entity.Client;
-import by.vadarod.javaee.entity.Room;
+import by.vadarod.javaee.entity.*;
 import by.vadarod.javaee.repository.ActivityRepositoryImpl;
 import by.vadarod.javaee.repository.ClientRepositoryImpl;
 import by.vadarod.javaee.repository.RoomRepositoryImpl;
@@ -19,11 +17,16 @@ public class Main {
     public static void main(String[] args) {
 
         Client[] defaultClients = {
-                new Client(null, "Иванов", "Иван", 37, "375292340088", LocalDate.of(2025, 9, 29), Client.ClientStatus.ACTIVE, 250L),
-                new Client(null, "Петров", "Петр", 26, "375291234567", LocalDate.of(2025, 4, 15), Client.ClientStatus.BLOCKED, 140L),
-                new Client(null, "Сидоров", "Олег", 56, "375299871188", LocalDate.of(2025, 8, 25), Client.ClientStatus.PREMIUM, 1400L),
-                new Client(null, "Рабинович", "Мойша", 78, "375331232277", LocalDate.of(2025, 9, 29), Client.ClientStatus.PREMIUM, 1001L),
-                new Client(null, "Прохоров", "Сергей", 21, "375446581298", LocalDate.of(2025, 5, 21), Client.ClientStatus.ACTIVE, 100L)
+                new Client(null, "Иванов", "Иван", 37, "375292340088", LocalDate.of(2025, 9, 29), Client.ClientStatus.ACTIVE, 250L,
+                        new Address("Минск","Тимирязева","23","220091")),
+                new Client(null, "Петров", "Петр", 26, "375291234567", LocalDate.of(2025, 4, 15), Client.ClientStatus.BLOCKED, 140L,
+                        new Address("Минск","Притыцкого","15","220129")),
+                new Client(null, "Сидоров", "Олег", 56, "375299871188", LocalDate.of(2025, 8, 25), Client.ClientStatus.PREMIUM, 1400L,
+                        new Address("Фаниполь","Радужная","5","320077")),
+                new Client(null, "Рабинович", "Мойша", 78, "375331232277", LocalDate.of(2025, 9, 29), Client.ClientStatus.PREMIUM, 1001L,
+                        new Address("Минск","Весенняя","1","221356")),
+                new Client(null, "Прохоров", "Сергей", 21, "375446581298", LocalDate.of(2025, 5, 21), Client.ClientStatus.ACTIVE, 100L,
+                        new Address("Минск","Рафиева","78","267089"))
         };
 
         ClientService clientService = new ClientService(new ClientRepositoryImpl());
@@ -79,6 +82,18 @@ public class Main {
             System.out.println("Добавлено дополнительное помещение: " + room);
         } else {
             System.out.println("Помещение не найдено!");
+        }
+
+        List<RoomUnder15> smallRoomsList = roomService.findRoomsUnder15();
+        System.out.println("Список помещений вместимостью меньше 15 человек:");
+        for (RoomUnder15 smallRoom:smallRoomsList) {
+            System.out.println(smallRoom);
+        }
+
+        List<PremiumClient> premiumClients = clientService.findAllPremiumClients();
+        System.out.println("Список премиум клиентов:");
+        for (PremiumClient premiumClient:premiumClients) {
+            System.out.println(premiumClient);
         }
 
         // вывод текущего состояния БД

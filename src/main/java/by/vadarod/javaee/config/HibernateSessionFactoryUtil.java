@@ -1,8 +1,6 @@
 package by.vadarod.javaee.config;
 
-import by.vadarod.javaee.entity.Activity;
-import by.vadarod.javaee.entity.Client;
-import by.vadarod.javaee.entity.Room;
+import by.vadarod.javaee.entity.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -19,6 +17,8 @@ public class HibernateSessionFactoryUtil {
                 configuration.addAnnotatedClass(Client.class);
                 configuration.addAnnotatedClass(Activity.class);
                 configuration.addAnnotatedClass(Room.class);
+                configuration.addAnnotatedClass(RoomUnder15.class);
+                configuration.addAnnotatedClass(PremiumClient.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
 
