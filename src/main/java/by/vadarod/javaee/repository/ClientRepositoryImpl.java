@@ -2,6 +2,7 @@ package by.vadarod.javaee.repository;
 
 import by.vadarod.javaee.config.HibernateSessionFactoryUtil;
 import by.vadarod.javaee.entity.Client;
+import by.vadarod.javaee.entity.PremiumClient;
 import jakarta.persistence.Query;
 import lombok.NonNull;
 import org.hibernate.Session;
@@ -33,7 +34,7 @@ public class ClientRepositoryImpl implements ClientRepository {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("select c from Client c", Client.class);
         @SuppressWarnings("unchecked")
-        List<Client> clients = (List<Client> )query.getResultList();
+        List<Client> clients = (List<Client>)query.getResultList();
         session.close();
 
         return clients;
@@ -72,5 +73,16 @@ public class ClientRepositoryImpl implements ClientRepository {
             session.getTransaction().commit();
         }
         session.close();
+    }
+
+    @Override
+    public List<PremiumClient> findAllPremiumClients() {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("select p from PremiumClient p", PremiumClient.class);
+        @SuppressWarnings("unchecked")
+        List<PremiumClient> premiumClients = (List<PremiumClient>)query.getResultList();
+        session.close();
+
+        return premiumClients;
     }
 }
