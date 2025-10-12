@@ -3,9 +3,11 @@ package by.vadarod.javaee;
 import by.vadarod.javaee.entity.*;
 import by.vadarod.javaee.repository.ActivityRepositoryImpl;
 import by.vadarod.javaee.repository.ClientRepositoryImpl;
+import by.vadarod.javaee.repository.EmployeeRepositoryImpl;
 import by.vadarod.javaee.repository.RoomRepositoryImpl;
 import by.vadarod.javaee.service.ActivityService;
 import by.vadarod.javaee.service.ClientService;
+import by.vadarod.javaee.service.EmployeeService;
 import by.vadarod.javaee.service.RoomService;
 
 import java.math.BigDecimal;
@@ -45,6 +47,25 @@ public class Main {
         } else {
             System.out.println("Клиент не найден!");
         }
+
+        Employee[] defaultEmployees = {
+                new Employee(null, "Гончаревич", "Василий", 45, "375298880018", LocalDate.of(2025, 3, 20), null, "Фитнес инструктор",3550L,
+                        new Address("Минск","Тихая","15","220231")),
+                new Employee(null, "Аниськова", "Жанна", 25, "375251112369", LocalDate.of(2024, 6, 23), null, "Уборщик",1000L,
+                        new Address("Минск","Радиальная","76","220001")),
+                new Employee(null, "Черепович", "Александр", 34, "375291872256", LocalDate.of(2023, 11, 9), null, "Фитнес инструктор",2500L,
+                        new Address("Минск","Чичурина","9","220201")),
+                new Employee(null, "Сазонов", "Виктор", 44, "375297442277", LocalDate.of(2025, 6, 15), null, "Директор",4500L,
+                        new Address("Минск","Радужная","1","222358"))
+        };
+
+        EmployeeService employeeService = new EmployeeService(new EmployeeRepositoryImpl());
+
+        employeeService.addEmployee(defaultEmployees[0]);
+        employeeService.addEmployee(defaultEmployees[1]);
+        employeeService.addEmployee(defaultEmployees[2]);
+        employeeService.addEmployee(defaultEmployees[3]);
+
 
         Activity[] defaultActivities = {
                 new Activity(null, "Тренажерный зал", new BigDecimal("10.00").setScale(2, RoundingMode.UP)),
@@ -90,11 +111,11 @@ public class Main {
             System.out.println(smallRoom);
         }
 
-        List<PremiumClient> premiumClients = clientService.findAllPremiumClients();
-        System.out.println("Список премиум клиентов:");
-        for (PremiumClient premiumClient:premiumClients) {
-            System.out.println(premiumClient);
-        }
+//        List<PremiumClient> premiumClients = clientService.findAllPremiumClients();
+//        System.out.println("Список премиум клиентов:");
+//        for (PremiumClient premiumClient:premiumClients) {
+//            System.out.println(premiumClient);
+//        }
 
         // вывод текущего состояния БД
 
@@ -102,6 +123,12 @@ public class Main {
         System.out.println("Список всех клиентов в базе:");
         for (Client tmpClient:clients) {
             System.out.println(tmpClient);
+        }
+
+        List<Employee> employeeList = employeeService.getAllEmployees();
+        System.out.println("Список всех работников в базе:");
+        for (Employee tmpEmployee:employeeList) {
+            System.out.println(tmpEmployee);
         }
 
         List<Room> roomList = roomService.getAllRooms();

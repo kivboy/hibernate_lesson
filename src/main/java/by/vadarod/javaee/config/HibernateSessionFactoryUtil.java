@@ -14,11 +14,12 @@ public class HibernateSessionFactoryUtil {
         if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration().configure();
+                configuration.addAnnotatedClass(Person.class);
                 configuration.addAnnotatedClass(Client.class);
+                configuration.addAnnotatedClass(Employee.class);
                 configuration.addAnnotatedClass(Activity.class);
                 configuration.addAnnotatedClass(Room.class);
                 configuration.addAnnotatedClass(RoomUnder15.class);
-                configuration.addAnnotatedClass(PremiumClient.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
 

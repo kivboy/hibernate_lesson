@@ -10,8 +10,8 @@ import org.hibernate.annotations.Where;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(schema = "sport_sch", name = "clients")
+//@Entity
+//@Table(schema = "sport_sch", name = "clients")
 @Getter
 @Setter
 @NoArgsConstructor

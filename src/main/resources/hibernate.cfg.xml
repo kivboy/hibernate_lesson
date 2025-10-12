@@ -19,7 +19,7 @@
         <property name="hibernate.format_sql">true</property>
 
         <!-- Optional: Schema auto-update (create, update, validate, create-drop) -->
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
 
         <!-- Mapping files or annotated classes -->
         <!-- Example for annotated class: -->
