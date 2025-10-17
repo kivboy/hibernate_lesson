@@ -1,40 +1,46 @@
 package by.vadarod.javaee.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
-@Table (schema = "sport_sch", name = "clients")
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
-public class Client {
+@Table(schema = "sport_sch", name = "clients")
+@PrimaryKeyJoinColumn(name="person_id")
+public class Client extends Person {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clientSeq")
-    @SequenceGenerator(name = "clientSeq", schema = "sport_sch", sequenceName = "client_seq", allocationSize = 1)
-    private Long id;
-
-    @Column (name = "last_name", length=100)
-    private String lastName;
-    @Column (name = "first_name", length=100)
-    private String firstName;
-    private int age;
-    @Column (length=20)
-    private String phone;
     @Column (name = "last_visit")
     private LocalDate lastVisit;
     @Column (name = "status")
     private ClientStatus clientStatus;
     private Long amount;
 
-    @Embedded
-    private Address address;
+    public Client(Long id, String lastName, String firstName, int age,
+           String phone, LocalDate lastVisit, ClientStatus clientStatus, Long amount, Address address) {
 
+        this.setId(id);
+        this.setLastName(lastName);
+        this.setFirstName(firstName);
+        this.setAge(age);
+        this.setPhone(phone);
+        this.setLastVisit(lastVisit);
+        this.setClientStatus(clientStatus);
+        this.setAmount(amount);
+        this.setAddress(address);
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Client{%s, lastVisit=%tF, clientStatus=%s, amount=%d}",
+                super.toString(),
+                lastVisit, clientStatus, amount
+        );
+    }
 
     public enum ClientStatus {
         ACTIVE("Активный"),
