@@ -33,10 +33,18 @@ public class RoomService {
     }
 
     public List<Room> getAllRooms() {
-        return roomRepository.getlAll();
+        return roomRepository.getAll();
     }
 
     public List<RoomUnder15> findRoomsUnder15() {
         return roomRepository.findRoomsUnder15();
+    }
+
+    public List<Room> findRoomsByCodes(List<String> idNumberList) {
+        return roomRepository.findRoomsByCodes(idNumberList);
+    }
+
+    public void deleteRoom(Long roomId) {
+        roomRepository.deleteRoom(roomId);
     }
 }

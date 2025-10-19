@@ -1,15 +1,17 @@
 package by.vadarod.javaee.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(schema = "sport_sch", name = "activities")
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Activity {
@@ -18,9 +20,15 @@ public class Activity {
     @SequenceGenerator(name = "activitySeq", schema = "sport_sch", sequenceName = "activity_seq", allocationSize = 1)
     private Long id;
 
-    @Column (name = "activity_name", length=100)
+    @Column (name = "activity_name", length=100, nullable = false)
     private String name;
 
     @Column (name = "price", precision = 10, scale = 2)
     private BigDecimal price;
+
+    @OneToMany
+    @JoinColumn (name = "activity_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Room> roomList = new ArrayList<>();
 }

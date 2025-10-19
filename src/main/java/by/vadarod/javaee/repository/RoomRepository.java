@@ -8,8 +8,10 @@ import java.util.List;
 
 public interface RoomRepository {
     Long addRoom(Room room);
-    List<Room> getlAll();
+    List<Room> getAll();
+    void deleteRoom(Long roomId);
     Room findRoomById(Long roomId);
+    List<Room> findRoomsByCodes(List<String> idNumberList);
     Room updateRoomPricePerHour(Long roomId, BigDecimal price);
     Room addRoomPopulatedByRoomId(Long oldRoomId, String roomName, String roomIdNumber);
     List<RoomUnder15> findRoomsUnder15();

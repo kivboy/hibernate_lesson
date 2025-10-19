@@ -8,6 +8,7 @@ import lombok.ToString;
 import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Where;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 //@Entity
@@ -32,7 +33,8 @@ public class PremiumClient {
     private LocalDate lastVisit;
     @Column (name = "status")
     private Client.ClientStatus clientStatus;
-    private Long amount;
+    @Column (name = "amount", precision = 10, scale = 2)
+    private BigDecimal amount;
 
     @Embedded
     private Address address;
