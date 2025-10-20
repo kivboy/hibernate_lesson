@@ -43,11 +43,11 @@ public class Employee extends Person {
         );
     }
 
-    @Column(name = "employment_date")
+    @Column(name = "employment_date", nullable = false)
     LocalDate employmentDate;
     @Column(name = "dismissal_date")
     LocalDate dismissalDate;
-    @Column(name = "job_title", length = 100)
+    @Column(name = "job_title", length = 100, nullable = false)
     String jobTitle;
     Long salary;
 }

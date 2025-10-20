@@ -17,9 +17,9 @@ public class Person {
     @SequenceGenerator(name = "personSeq", schema = "sport_sch", sequenceName = "person_seq", allocationSize = 1)
     private Long id;
 
-    @Column(name = "last_name", length=100)
+    @Column(name = "last_name", length=100, nullable = false)
     private String lastName;
-    @Column (name = "first_name", length=100)
+    @Column (name = "first_name", length=100, nullable = false)
     private String firstName;
     private int age;
     @Column (length = 20)

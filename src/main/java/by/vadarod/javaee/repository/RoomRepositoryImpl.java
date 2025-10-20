@@ -30,7 +30,7 @@ public class RoomRepositoryImpl implements RoomRepository{
     }
 
     @Override
-    public List<Room> getlAll() {
+    public List<Room> getAll() {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("select r from Room r", Room.class);
         @SuppressWarnings("unchecked")
@@ -41,12 +41,35 @@ public class RoomRepositoryImpl implements RoomRepository{
     }
 
     @Override
+    public void deleteRoom(Long roomId) {
+        Session session = sessionFactory.openSession();
+        Room room = session.get(Room.class, roomId);
+        if (room != null) {
+            session.beginTransaction();
+            session.remove(room);
+            session.getTransaction().commit();
+        }
+        session.close();
+    }
+
+    @Override
     public Room findRoomById(Long roomId) {
         Session session = sessionFactory.openSession();
         Room room = session.get(Room.class, roomId);
         session.close();
 
         return room;
+    }
+
+    @Override
+    public List<Room> findRoomsByCodes(List<String> idNumberList) {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("select r from Room r where r.idNumber in :idNumberList", Room.class);
+        query.setParameter("idNumberList", idNumberList);
+        @SuppressWarnings("unchecked")
+        List<Room> roomList = (List<Room>)query.getResultList();
+        session.close();
+        return roomList;
     }
 
     @Override

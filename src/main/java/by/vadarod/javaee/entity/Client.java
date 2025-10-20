@@ -3,7 +3,10 @@ package by.vadarod.javaee.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -17,10 +20,17 @@ public class Client extends Person {
     private LocalDate lastVisit;
     @Column (name = "status")
     private ClientStatus clientStatus;
-    private Long amount;
+    @Column (name = "amount", precision = 10, scale = 2)
+    private BigDecimal amount;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE)
+    private List<Visit> visitList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE)
+    private List<Reservation> reservationList = new ArrayList<>();
 
     public Client(Long id, String lastName, String firstName, int age,
-           String phone, LocalDate lastVisit, ClientStatus clientStatus, Long amount, Address address) {
+           String phone, LocalDate lastVisit, ClientStatus clientStatus, BigDecimal amount, Address address) {
 
         this.setId(id);
         this.setLastName(lastName);
@@ -36,7 +46,7 @@ public class Client extends Person {
     @Override
     public String toString() {
         return String.format(
-                "Client{%s, lastVisit=%tF, clientStatus=%s, amount=%d}",
+                "Client{%s, lastVisit=%tF, clientStatus=%s, amount=%.2f}",
                 super.toString(),
                 lastVisit, clientStatus, amount
         );
