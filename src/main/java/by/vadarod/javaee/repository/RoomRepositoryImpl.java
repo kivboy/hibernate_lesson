@@ -34,7 +34,7 @@ public class RoomRepositoryImpl implements RoomRepository{
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("select r from Room r", Room.class);
         @SuppressWarnings("unchecked")
-        List<Room> roomList = (List<Room> )query.getResultList();
+        List<Room> roomList = (List<Room>)query.getResultList();
         session.close();
 
         return roomList;
@@ -115,5 +115,4 @@ public class RoomRepositoryImpl implements RoomRepository{
 
         return roomList;
     }
-
 }

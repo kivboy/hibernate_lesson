@@ -70,4 +70,44 @@ public class EmployeeRepositoryImpl implements EmployeeRepository{
         }
         session.close();
     }
+
+    @Override
+    public Employee getMinSalaryEmployee() {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("SELECT e FROM Employee e ORDER BY e.salary LIMIT 1", Employee.class);
+        @SuppressWarnings("unchecked")
+        List<Employee> employeeList = (List<Employee>)query.getResultList();
+        session.close();
+
+        if (!employeeList.isEmpty()) {
+            return employeeList.getFirst();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Employee getMaxSalaryEmployee() {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("SELECT e FROM Employee e ORDER BY e.salary DESC LIMIT 1", Employee.class);
+        @SuppressWarnings("unchecked")
+        List<Employee> employeeList = (List<Employee>)query.getResultList();
+        session.close();
+
+        if (!employeeList.isEmpty()) {
+            return employeeList.getFirst();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Long getAllEmployeesSalary() {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("SELECT SUM(e.salary) FROM Employee e", Long.class);
+        Long salarySum = (Long)query.getSingleResult();
+        session.close();
+
+        return salarySum;
+    }
 }

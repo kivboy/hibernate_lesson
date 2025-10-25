@@ -10,4 +10,7 @@ public interface EmployeeRepository {
     void deleteEmployeeById(Long personId);
     Employee findEmployeeById(Long personId);
     void changeEmployee(Employee employee);
+    Employee getMinSalaryEmployee();
+    Employee getMaxSalaryEmployee();
+    Long getAllEmployeesSalary();
 }

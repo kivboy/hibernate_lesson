@@ -14,7 +14,6 @@ public class Main {
     public static void main(String[] args) {
 
         // Клиенты
-
         Client[] defaultClients = {
                 new Client(null, "Иванов", "Иван", 37, "375292340088", LocalDate.of(2025, 9, 29), Client.ClientStatus.ACTIVE,
                         new BigDecimal("250.70").setScale(2, RoundingMode.UP),
@@ -50,8 +49,15 @@ public class Main {
             System.out.println("Клиент не найден!");
         }
 
-        // Сотрудники
+        // Поиск клиента по фамилии и\или имени
+        List<Client> clients = clientService.findClientsByName("Прохоров", "Сергей");
+        System.out.println("Найдены клиенты:");
+        for (Client tmpClient : clients) {
+            System.out.println(tmpClient);
+        }
 
+
+        // Сотрудники
         Employee[] defaultEmployees = {
                 new Employee(null, "Гончаревич", "Василий", 45, "375298880018", LocalDate.of(2025, 3, 20), null, "Фитнес инструктор",3550L,
                         new Address("Минск","Тихая","15","220231")),
@@ -70,10 +76,15 @@ public class Main {
         employeeService.addEmployee(defaultEmployees[2]);
         employeeService.addEmployee(defaultEmployees[3]);
 
-        // Помещения
+        System.out.println("Самый высокооплачиваемый сотрудник: " + employeeService.getMaxSalaryEmployee());
+        System.out.println("Самый низкооплачиваемый сотрудник: " + employeeService.getMinSalaryEmployee());
 
+        System.out.println("Расходы на зарплату в месяц: " + employeeService.getAllEmployeesSalaryPerMonth(1L));
+
+        // Помещения
         Room[] defaultRoms = {
                 new Room(null, "Зал №1", "A1.01.00", 20, Room.RoomStatus.ACTIVE, new BigDecimal("100.00").setScale(2, RoundingMode.UP)),
+                new Room(null, "Зал №2", "A1.02.00", 10, Room.RoomStatus.ACTIVE, new BigDecimal("100.00").setScale(2, RoundingMode.UP)),
                 new Room(null, "Бассейн №1", "B1.01.00", 50, Room.RoomStatus.ACTIVE, new BigDecimal("500.00").setScale(2, RoundingMode.UP)),
                 new Room(null, "Сауна №1","S1.01.00", 10, Room.RoomStatus.REPAIR, new BigDecimal("150.00").setScale(2, RoundingMode.UP))
         };
@@ -83,6 +94,7 @@ public class Main {
         Long roomId = roomService.addRoom(defaultRoms[0]);
         roomService.addRoom(defaultRoms[1]);
         roomService.addRoom(defaultRoms[2]);
+        roomService.addRoom(defaultRoms[3]);
 
         Room room = roomService.findRoomById(roomId);
         if (room != null) {
@@ -91,7 +103,7 @@ public class Main {
             room = roomService.updateRoomPricePerHour(roomId, new BigDecimal("120.00").setScale(2, RoundingMode.UP));
             System.out.println("Обновлена стоимость аренды: " + room);
 
-            room = roomService.addRoomPopulatedByRoomId(roomId, "Зал №2", "A1.02.00");
+            room = roomService.addRoomPopulatedByRoomId(roomId, "Зал №3", "A1.03.00");
             System.out.println("Добавлено дополнительное помещение: " + room);
         } else {
             System.out.println("Помещение не найдено!");
@@ -106,7 +118,6 @@ public class Main {
         PrintCurrentDbStatus(null, null, roomService, null, null, null);
 
         // Услуги
-
         Activity[] defaultActivities = {
                 new Activity(null, "Тренажерный зал", new BigDecimal("10.00").setScale(2, RoundingMode.UP),
                         roomService.findRoomsByCodes(List.of("A1.01.00", "A1.02.00"))),
@@ -122,8 +133,10 @@ public class Main {
         activityService.addActivity(defaultActivities[1]);
         activityService.addActivity(defaultActivities[2]);
 
-        // Визиты:
+        System.out.println("Стоимость аренды 1 часа тренажерных залов на человека:");
+        System.out.println(activityService.getRoomsPricePerClient(1L));
 
+        // Визиты:
         VisitService visitService = new VisitService(new VisitRepositoryImpl());
         client = clientService.findClientById(1L);
         if (client != null) {
@@ -218,7 +231,6 @@ public class Main {
                                      ReservationService reservationService) {
 
         // Вывод текущего состояния БД
-
         if (clientService != null) {
             List<Client> clients = clientService.getAllClients();
             System.out.println("Список всех клиентов в базе:");

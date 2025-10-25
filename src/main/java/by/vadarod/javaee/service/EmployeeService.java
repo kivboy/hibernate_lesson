@@ -29,4 +29,16 @@ public class EmployeeService {
     public Employee findEmployeeById(Long personId) {
         return employeeRepository.findEmployeeById(personId);
     }
+
+    public Employee getMinSalaryEmployee() {
+        return employeeRepository.getMinSalaryEmployee();
+    }
+
+    public Employee getMaxSalaryEmployee() {
+        return employeeRepository.getMaxSalaryEmployee();
+    }
+
+    public Long getAllEmployeesSalaryPerMonth(Long monthCount) {
+        return monthCount * employeeRepository.getAllEmployeesSalary();
+    }
 }

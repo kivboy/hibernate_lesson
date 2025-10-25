@@ -4,7 +4,9 @@ import by.vadarod.javaee.entity.Activity;
 import by.vadarod.javaee.repository.ActivityRepository;
 import lombok.NonNull;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public class ActivityService {
     private final ActivityRepository activityRepository;
@@ -23,5 +25,9 @@ public class ActivityService {
 
     public List<Activity> getAllActivities() {
         return activityRepository.getAll();
+    }
+
+    public Map<String, BigDecimal> getRoomsPricePerClient(Long activityId) {
+        return activityRepository.getRoomsPricePerClient(activityId);
     }
 }
