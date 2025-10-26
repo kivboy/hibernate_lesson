@@ -85,4 +85,38 @@ public class ClientRepositoryImpl implements ClientRepository {
 
         return premiumClients;
     }
+
+    @Override
+    public List<Client> findClientsByName(String lastName, String firstName) {
+        Session session = sessionFactory.openSession();
+        String queryParams = "";
+
+        if ((lastName != null) && !lastName.isEmpty()) {
+            queryParams = "c.lastName=:lastNameParam";
+        }
+
+        if ((firstName != null) && !firstName.isEmpty()) {
+            if (queryParams.isEmpty()) {
+                queryParams = "c.firstName=:firstNameParam";
+            } else {
+                queryParams = queryParams.concat(" AND c.firstName=:firstNameParam");
+            }
+        }
+
+        Query query = session.createQuery("SELECT c FROM Client c WHERE ".concat(queryParams), Client.class);
+
+        if ((lastName != null) && !lastName.isEmpty()) {
+            query.setParameter("lastNameParam", lastName);
+        }
+
+        if ((firstName != null) && !firstName.isEmpty()) {
+            query.setParameter("firstNameParam", firstName);
+        }
+
+        @SuppressWarnings("unchecked")
+        List<Client> clients = (List<Client>)query.getResultList();
+        session.close();
+
+        return clients;
+    }
 }

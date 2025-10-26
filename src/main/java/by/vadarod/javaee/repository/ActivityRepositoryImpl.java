@@ -6,7 +6,12 @@ import jakarta.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class ActivityRepositoryImpl implements ActivityRepository{
 
@@ -46,5 +51,23 @@ public class ActivityRepositoryImpl implements ActivityRepository{
         session.close();
 
         return activity;
+    }
+
+    @Override
+    public Map<String, BigDecimal> getRoomsPricePerClient(Long activityId) {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("SELECT r.name,r.pricePerHour / r.capacity AS price_per_client FROM Activity a JOIN a.roomList r WHERE a.id=:activityId ORDER BY r.name", Object[].class);
+        query.setParameter("activityId", activityId);
+        @SuppressWarnings("unchecked")
+        List<Objects[]> prices= (List<Objects[]>)query.getResultList();
+        Map<String, BigDecimal> pricesMap = new HashMap<>();
+
+        for (Object[] row : prices) {
+           pricesMap.put((String) row[0],
+                   new BigDecimal(String.valueOf(row[1])).setScale(2, RoundingMode.UP));
+        }
+
+        session.close();
+        return pricesMap;
     }
 }

@@ -44,4 +44,8 @@ public class ClientService {
         return clientRepository.findAllPremiumClients();
     }
 
+    public List<Client> findClientsByName(String lastName, String firstName) {
+        return clientRepository.findClientsByName(lastName, firstName);
+    }
+
 }

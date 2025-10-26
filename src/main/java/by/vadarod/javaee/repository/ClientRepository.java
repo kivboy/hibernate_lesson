@@ -12,5 +12,5 @@ public interface ClientRepository {
     Client findClientById(Long id);
     void changeClient(Client client);
     List<PremiumClient> findAllPremiumClients();
-
+    List<Client> findClientsByName(String lastName, String firstName);
 }
