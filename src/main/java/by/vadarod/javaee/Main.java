@@ -205,8 +205,18 @@ public class Main {
             }
         }
 
-        System.out.println("Список помещений которые посещали клиенты старше X лет:");
-        reservationService.findReservationsByClientAge(20).forEach(System.out::println);
+        // бронирование клиента старше 50 лет
+        client = clientService.findClientById(3L);
+        if (client != null) {
+            room = roomService.findRoomsByCodes(List.of("A1.02.00")).getFirst();
+            if (room != null) {
+                Reservation reservation = new Reservation(null, client, room, LocalDateTime.now());
+                reservationService.addReservation(reservation);
+            }
+        }
+
+        System.out.println("Список помещений которые посещали клиенты старше 50 лет:");
+        reservationService.findReservationsByClientAge(50).forEach(System.out::println);
 
         // список бронирований
         PrintCurrentDbStatus(null, null, null, null, null, reservationService);
