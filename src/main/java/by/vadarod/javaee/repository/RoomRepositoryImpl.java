@@ -3,7 +3,11 @@ package by.vadarod.javaee.repository;
 import by.vadarod.javaee.config.HibernateSessionFactoryUtil;
 import by.vadarod.javaee.entity.Room;
 import by.vadarod.javaee.entity.RoomUnder15;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -114,5 +118,16 @@ public class RoomRepositoryImpl implements RoomRepository{
         session.close();
 
         return roomList;
+    }
+
+    @Override
+    public int getMaxClientsAmount() {
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Integer> criteriaQuery = criteriaBuilder.createQuery(Integer.class);
+        List<Room.RoomStatus> roomStatusList = List.of(Room.RoomStatus.ACTIVE);
+        Root<Room> roomRoot = criteriaQuery.from(Room.class);
+        criteriaQuery.select(criteriaBuilder.sum(roomRoot.get("capacity"))).where(roomRoot.get("roomStatus").in(roomStatusList));
+        return entityManager.createQuery(criteriaQuery).getSingleResult();
     }
 }

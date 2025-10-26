@@ -2,7 +2,12 @@ package by.vadarod.javaee.repository;
 
 import by.vadarod.javaee.config.HibernateSessionFactoryUtil;
 import by.vadarod.javaee.entity.Activity;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -69,5 +74,24 @@ public class ActivityRepositoryImpl implements ActivityRepository{
 
         session.close();
         return pricesMap;
+    }
+
+    @Override
+    public Activity getMinPriceActivity() {
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Activity> criteriaQuery = criteriaBuilder.createQuery(Activity.class);
+        Root<Activity> activityRoot = criteriaQuery.from(Activity.class);
+        criteriaQuery.select(activityRoot).orderBy(criteriaBuilder.asc(activityRoot.get("price")));
+
+        TypedQuery<Activity> typedQuery = entityManager.createQuery(criteriaQuery);
+        typedQuery.setMaxResults(1);
+        List<Activity> activityList = typedQuery.getResultList();
+
+        if (!activityList.isEmpty()) {
+            return activityList.getFirst();
+        } else {
+            return null;
+        }
     }
 }

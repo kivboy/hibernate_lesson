@@ -13,4 +13,5 @@ public interface EmployeeRepository {
     Employee getMinSalaryEmployee();
     Employee getMaxSalaryEmployee();
     Long getAllEmployeesSalary();
+    List<Employee> getAllEmployeesCriteria();
 }

@@ -13,4 +13,5 @@ public interface ClientRepository {
     void changeClient(Client client);
     List<PremiumClient> findAllPremiumClients();
     List<Client> findClientsByName(String lastName, String firstName);
+    List<Client> findClientsByAge(int fromAge, int toAge);
 }
