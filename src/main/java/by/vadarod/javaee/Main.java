@@ -216,7 +216,7 @@ public class Main {
         }
 
         System.out.println("Список помещений которые посещали клиенты старше 50 лет:");
-        reservationService.findReservationsByClientAge(50).forEach(System.out::println);
+        reservationService.findRoomReservationsByClientAge(50).forEach(System.out::println);
 
         // список бронирований
         PrintCurrentDbStatus(null, null, null, null, null, reservationService);
