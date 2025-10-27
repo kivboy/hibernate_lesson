@@ -56,6 +56,8 @@ public class Main {
             System.out.println(tmpClient);
         }
 
+        System.out.println("Поиск клиентов по возрасту:");
+        clientService.findClientsByAge(20, 40).forEach(System.out::println);
 
         // Сотрудники
         Employee[] defaultEmployees = {
@@ -115,6 +117,8 @@ public class Main {
             System.out.println(smallRoom);
         }
 
+        System.out.println("Всего в комплексе может находится людей: " + roomService.getMaxClientsAmount());
+
         PrintCurrentDbStatus(null, null, roomService, null, null, null);
 
         // Услуги
@@ -132,6 +136,9 @@ public class Main {
         activityService.addActivity(defaultActivities[0]);
         activityService.addActivity(defaultActivities[1]);
         activityService.addActivity(defaultActivities[2]);
+
+        System.out.println("Самая дешевая услуга:");
+        System.out.println(activityService.getMinPriceActivity());
 
         System.out.println("Стоимость аренды 1 часа тренажерных залов на человека:");
         System.out.println(activityService.getRoomsPricePerClient(1L));
@@ -198,6 +205,19 @@ public class Main {
             }
         }
 
+        // бронирование клиента старше 50 лет
+        client = clientService.findClientById(3L);
+        if (client != null) {
+            room = roomService.findRoomsByCodes(List.of("A1.02.00")).getFirst();
+            if (room != null) {
+                Reservation reservation = new Reservation(null, client, room, LocalDateTime.now());
+                reservationService.addReservation(reservation);
+            }
+        }
+
+        System.out.println("Список помещений которые посещали клиенты старше 50 лет:");
+        reservationService.findRoomReservationsByClientAge(50).forEach(System.out::println);
+
         // список бронирований
         PrintCurrentDbStatus(null, null, null, null, null, reservationService);
 
@@ -232,11 +252,8 @@ public class Main {
 
         // Вывод текущего состояния БД
         if (clientService != null) {
-            List<Client> clients = clientService.getAllClients();
             System.out.println("Список всех клиентов в базе:");
-            for (Client tmpClient : clients) {
-                System.out.println(tmpClient);
-            }
+            clientService.getAllClients().forEach(System.out::println);
         }
 
 //        List<PremiumClient> premiumClients = clientService.findAllPremiumClients();
@@ -246,43 +263,28 @@ public class Main {
 //        }
 
         if (employeeService != null) {
-            List<Employee> employeeList = employeeService.getAllEmployees();
             System.out.println("Список всех работников в базе:");
-            for (Employee tmpEmployee : employeeList) {
-                System.out.println(tmpEmployee);
-            }
+            employeeService.getAllEmployees().forEach(System.out::println);
         }
 
         if (roomService != null) {
-            List<Room> roomList = roomService.getAllRooms();
             System.out.println("Список всех помещений в базе:");
-            for (Room tmpRoom : roomList) {
-                System.out.println(tmpRoom);
-            }
+            roomService.getAllRooms().forEach(System.out::println);
         }
 
         if (activityService != null) {
-            List<Activity> activityList = activityService.getAllActivities();
             System.out.println("Список всех услуг в базе:");
-            for (Activity tmpActivity : activityList) {
-                System.out.println(tmpActivity);
-            }
+            activityService.getAllActivities().forEach(System.out::println);
         }
 
         if (visitService != null) {
-            List<Visit> visitList = visitService.getAllVisits();
             System.out.println("Список всех визитов в базе:");
-            for (Visit tmpVisit:visitList) {
-                System.out.println(tmpVisit);
-            }
+            visitService.getAllVisits().forEach(System.out::println);
         }
 
         if (reservationService != null) {
-            List<Reservation> reservationList = reservationService.getAllReservations();
             System.out.println("Список всех бронирований в базе:");
-            for (Reservation tmpReservation:reservationList) {
-                System.out.println(tmpReservation);
-            }
+            reservationService.getAllReservations().forEach(System.out::println);
         }
 
     }

@@ -9,4 +9,5 @@ public interface ReservationRepository {
     Long addReservation(Reservation reservation);
     List<Reservation> getAll();
     List<Reservation> getReservationsByRoomId(Long roomId, LocalDate reserveDate);
+    List<Reservation> findReservationsByClientAge(int minAge);
 }

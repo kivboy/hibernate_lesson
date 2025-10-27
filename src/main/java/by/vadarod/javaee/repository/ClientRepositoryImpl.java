@@ -3,7 +3,11 @@ package by.vadarod.javaee.repository;
 import by.vadarod.javaee.config.HibernateSessionFactoryUtil;
 import by.vadarod.javaee.entity.Client;
 import by.vadarod.javaee.entity.PremiumClient;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import lombok.NonNull;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -118,5 +122,17 @@ public class ClientRepositoryImpl implements ClientRepository {
         session.close();
 
         return clients;
+    }
+
+    @Override
+    public List<Client> findClientsByAge(int fromAge, int toAge) {
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Client> criteriaQuery = criteriaBuilder.createQuery(Client.class);
+        Root<Client> rootClient = criteriaQuery.from(Client.class);
+        criteriaQuery.select(rootClient)
+                .where(criteriaBuilder.between(rootClient.get("age"),fromAge,toAge))
+                .orderBy(criteriaBuilder.asc(rootClient.get("age")));
+        return entityManager.createQuery(criteriaQuery).getResultList();
     }
 }

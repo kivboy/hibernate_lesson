@@ -15,4 +15,5 @@ public interface RoomRepository {
     Room updateRoomPricePerHour(Long roomId, BigDecimal price);
     Room addRoomPopulatedByRoomId(Long oldRoomId, String roomName, String roomIdNumber);
     List<RoomUnder15> findRoomsUnder15();
+    int getMaxClientsAmount();
 }

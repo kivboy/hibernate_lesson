@@ -30,4 +30,8 @@ public class ActivityService {
     public Map<String, BigDecimal> getRoomsPricePerClient(Long activityId) {
         return activityRepository.getRoomsPricePerClient(activityId);
     }
+
+    public Activity getMinPriceActivity() {
+        return activityRepository.getMinPriceActivity();
+    }
 }

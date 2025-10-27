@@ -47,4 +47,8 @@ public class RoomService {
     public void deleteRoom(Long roomId) {
         roomRepository.deleteRoom(roomId);
     }
+
+    public int getMaxClientsAmount() {
+        return roomRepository.getMaxClientsAmount();
+    }
 }

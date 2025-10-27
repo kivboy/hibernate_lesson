@@ -19,7 +19,9 @@ public class EmployeeService {
     }
 
     public List<Employee> getAllEmployees() {
-        return employeeRepository.getAll();
+
+        // employeeRepository.getAll()
+        return employeeRepository.getAllEmployeesCriteria();
     }
 
     public void deleteEmployee(@NonNull Employee employee) {

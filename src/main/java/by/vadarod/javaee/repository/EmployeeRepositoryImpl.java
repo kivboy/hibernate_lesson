@@ -2,7 +2,11 @@ package by.vadarod.javaee.repository;
 
 import by.vadarod.javaee.config.HibernateSessionFactoryUtil;
 import by.vadarod.javaee.entity.Employee;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -109,5 +113,16 @@ public class EmployeeRepositoryImpl implements EmployeeRepository{
         session.close();
 
         return salarySum;
+    }
+
+    @Override
+    public List<Employee> getAllEmployeesCriteria() {
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+        Root<Employee> employeeRoot = criteriaQuery.from(Employee.class);
+        criteriaQuery.select(employeeRoot);
+
+        return entityManager.createQuery(criteriaQuery).getResultList();
     }
 }

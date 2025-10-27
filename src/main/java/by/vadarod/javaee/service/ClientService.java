@@ -48,4 +48,11 @@ public class ClientService {
         return clientRepository.findClientsByName(lastName, firstName);
     }
 
+    public List<Client> findClientsByAge(int fromAge, int toAge) {
+        if ((fromAge < 0) || (toAge < 0) || (fromAge > toAge)) {
+            return List.of();
+        } else {
+            return clientRepository.findClientsByAge(fromAge, toAge);
+        }
+    }
 }
