@@ -13,6 +13,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
+
         // Клиенты
         Client[] defaultClients = {
                 new Client(null, "Иванов", "Иван", 37, "375292340088", LocalDate.of(2025, 9, 29), Client.ClientStatus.ACTIVE,

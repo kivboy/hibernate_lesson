@@ -6,7 +6,7 @@ import jakarta.persistence.Persistence;
 
 public class HibernateConnection {
     private static final EntityManagerFactory emf =
-            Persistence.createEntityManagerFactory("ClientsJpa");
+            Persistence.createEntityManagerFactory("HibernateSportClubJPA");
 
     public static EntityManager getEntityManager() {
         return emf.createEntityManager();
