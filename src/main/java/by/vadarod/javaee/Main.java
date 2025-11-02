@@ -137,6 +137,12 @@ public class Main {
         activityService.addActivity(defaultActivities[1]);
         activityService.addActivity(defaultActivities[2]);
 
+        System.out.println("Тестирование кэша 1-го уровня. Без кэша");
+        System.out.println(activityService.findL1CachedActivityById(2L, false));
+
+        System.out.println("Тестирование кэша 1-го уровня. С кэшем");
+        System.out.println(activityService.findL1CachedActivityById(1L, true));
+
         System.out.println("Самая дешевая услуга:");
         System.out.println(activityService.getMinPriceActivity());
 

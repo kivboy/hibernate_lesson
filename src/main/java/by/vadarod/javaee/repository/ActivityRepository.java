@@ -12,4 +12,5 @@ public interface ActivityRepository {
     Activity findActivityById(Long activityId);
     Map<String, BigDecimal> getRoomsPricePerClient(Long activityId);
     Activity getMinPriceActivity();
+    Activity findL1CachedActivityById(Long activityId, boolean isCache);
 }
