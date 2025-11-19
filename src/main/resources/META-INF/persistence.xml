@@ -1,36 +1,44 @@
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
-             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+                                 http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
              version="2.2">
 
-    <persistence-unit name="ClientsJpa">
+    <persistence-unit name="HibernateSportClubJPA">
         <description>
-            Persistence unit for Clients
+            Persistence unit for SportClubJPA
         </description>
 
+        <class>by.vadarod.javaee.entity.Activity</class>
+        <class>by.vadarod.javaee.entity.Person</class>
         <class>by.vadarod.javaee.entity.Client</class>
+        <class>by.vadarod.javaee.entity.Employee</class>
+        <class>by.vadarod.javaee.entity.Room</class>
+        <class>by.vadarod.javaee.entity.RoomUnder15</class>
+        <class>by.vadarod.javaee.entity.Visit</class>
+        <class>by.vadarod.javaee.entity.Reservation</class>
+
 
         <properties>
-            <property name="jakarta.persistence.jdbc.url"
-                      value="jdbc:postgresql://localhost:5432/sportclub" />
+            <!-- JDBC -->
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/sportclub"/>
+            <property name="jakarta.persistence.jdbc.user" value="postgres"/>
+            <property name="jakarta.persistence.jdbc.password" value="admin"/>
 
-            <property name="jakarta.persistence.jdbc.user"
-                      value="postgres" />
+            <!-- Hibernate -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
 
-            <property name="jakarta.persistence.jdbc.password"
-                      value="admin" />
+            <!-- Кэширование через JCache (Ehcache 3) -->
+            <property name="hibernate.cache.use_second_level_cache" value="true"/>
+            <property name="hibernate.cache.use_query_cache" value="true"/>
+            <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.jcache.JCacheRegionFactory"/>
+            <property name="hibernate.javax.cache.provider" value="org.ehcache.jsr107.EhcacheCachingProvider"/>
+            <property name="hibernate.javax.cache.uri" value="ehcache.xml"/>
 
-            <property name="hibernate.hbm2ddl.auto"
-                      value="create" />
-
-            <property name="hibernate.show_sql"
-                      value="true" />
-
-            <property name="hibernate.format_sql"
-                      value="true" />
         </properties>
-
     </persistence-unit>
-
 </persistence>

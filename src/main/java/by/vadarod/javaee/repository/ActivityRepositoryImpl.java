@@ -2,6 +2,7 @@ package by.vadarod.javaee.repository;
 
 import by.vadarod.javaee.config.HibernateSessionFactoryUtil;
 import by.vadarod.javaee.entity.Activity;
+import by.vadarod.javaee.entity.Employee;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
@@ -93,5 +94,28 @@ public class ActivityRepositoryImpl implements ActivityRepository{
         } else {
             return null;
         }
+    }
+
+    @Override
+    public Activity findL1CachedActivityById(Long activityId, boolean isCache) {
+
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("SELECT a FROM Activity a", Activity.class);
+        @SuppressWarnings("unchecked")
+        List<Activity> activityList = (List<Activity>)query.getResultList();
+
+        query = session.createQuery("SELECT e FROM Employee e", Employee.class);
+        // additional query without sence
+        @SuppressWarnings("unchecked")
+        List<Employee> Employee = (List<Employee>)query.getResultList();
+
+        if (!isCache) {
+            session.clear();
+        }
+
+        Activity activity = session.get(Activity.class, activityId);
+
+        session.close();
+        return activity;
     }
 }

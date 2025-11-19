@@ -34,4 +34,8 @@ public class ActivityService {
     public Activity getMinPriceActivity() {
         return activityRepository.getMinPriceActivity();
     }
+
+    public Activity findL1CachedActivityById(Long activityId, boolean isCache) {
+        return activityRepository.findL1CachedActivityById(activityId, isCache);
+    }
 }
